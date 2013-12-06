@@ -1,0 +1,45 @@
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+
+void print_arr(int a[],int n)
+{
+	for(int i=0;i<n;i++)
+		cout<<a[i]<<" ";
+	cout<<endl;
+}
+void init(int a[],int n)
+{
+    memset(a,0,n*sizeof(int));
+}
+void count_sort(int a[],int b[],int n,int max)
+{
+	int *c=new int[max+1];	
+    memset(c,0,(max+1)*sizeof(int));
+    
+	for(int i=0;i<n;i++)
+		c[a[i]]=c[a[i]]+1;
+	for(i=1;i<max+1;i++)
+		c[i]=c[i]+c[i-1];
+	for(i=n-1;i>-1;i--){
+		b[c[a[i]]-1]=a[i];
+		c[a[i]]--;
+	}
+
+	delete[] c;
+}
+int main()
+{
+	int a[12]={3,2,5,3,4,2,0,0,2,3,5,4};
+	int b[12];
+	memset(b,0,12*sizeof(int));
+
+	count_sort(a,b,12,5);
+	cout<<"a:  ";
+	print_arr(a,12);
+	cout<<"b:  ";
+	print_arr(b,12);
+
+	return 0;
+}
